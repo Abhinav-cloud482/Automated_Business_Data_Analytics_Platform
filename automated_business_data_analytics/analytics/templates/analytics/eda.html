@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Exploratory Data Analysis: {{ dataset.name }}</h2>
+<div class="row mb-4">
+    <div class="col-md"><div class="card p-3 bg-white shadow-sm"><h5>Rows</h5><h3>{{ overview.rows }}</h3></div></div>
+    <div class="col-md"><div class="card p-3 bg-white shadow-sm"><h5>Columns</h5><h3>{{ overview.columns }}</h3></div></div>
+    <div class="col-md"><div class="card p-3 bg-white shadow-sm"><h5>Missing</h5><h3>{{ overview.missing_values }}</h3></div></div>
+    <div class="col-md"><div class="card p-3 bg-white shadow-sm"><h5>Duplicates</h5><h3>{{ overview.duplicates }}</h3></div></div>
+    <div class="col-md"><div class="card p-3 bg-white shadow-sm"><h5>Memory</h5><h3>{{ overview.memory }}</h3></div></div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-success text-white"><h5>Automated Data Insights</h5></div>
+    <div class="card-body">
+        <ul>
+            {% for insight in insights %}
+            <li>{{ insight|safe }}</li>
+            {% empty %}
+            <li>No numerical metrics available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h5>Descriptive Statistics Table</h5></div>
+    <div class="card-body table-responsive">
+        {{ desc_stats|safe }}
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h5>Correlation Matrix</h5></div>
+    <div class="card-body table-responsive">
+        {{ corr_html|safe }}
+    </div>
+</div>
+<a href="{% url 'dataset_detail' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back to Dataset</a>
+{% endblock %}

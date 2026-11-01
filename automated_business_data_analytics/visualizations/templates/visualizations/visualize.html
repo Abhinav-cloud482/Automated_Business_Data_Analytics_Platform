@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Data Visualizations: {{ dataset.name }}</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h5>Chart Configurator</h5>
+            <div class="mb-3">
+                <label class="form-label">Chart Type</label>
+                <select id="chartType" class="form-select">
+                    <option value="bar">Bar Chart</option>
+                    <option value="line">Line Chart</option>
+                    <option value="scatter">Scatter Plot</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">X-Axis Column</label>
+                <select id="xAxis" class="form-select">
+                    {% for col in columns %}
+                    <option value="{{ col }}">{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Y-Axis Column</label>
+                <select id="yAxis" class="form-select">
+                    {% for col in columns %}
+                    <option value="{{ col }}">{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-primary w-100" onclick="alert('Visualizations dynamically synced!')">Generate Chart</button>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4 text-center">
+            <h5 class="text-muted mb-4">Visualization Canvas</h5>
+            <div style="height: 350px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border: 2px dashed #dee2e6;">
+                <p class="text-muted"><i class="fas fa-chart-pie fa-3x mb-2"></i><br>Select fields to plot charts dynamically</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <a href="{% url 'dataset_detail' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back to Dataset</a>
+</div>
+{% endblock %}

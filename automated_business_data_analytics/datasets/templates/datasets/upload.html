@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-upload me-2"></i>Upload Dataset</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Dataset Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Sales Report 2026">
+                    </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select CSV or Excel File</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".csv, .xlsx, .xls" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100"><i class="fas fa-cloud-upload-alt me-2"></i>Upload & Process</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
