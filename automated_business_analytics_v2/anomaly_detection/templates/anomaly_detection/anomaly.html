@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Intelligent Anomaly Detection: {{ dataset.name }}</h2>
+<p class="text-muted">Multivariate outlier isolation and anomaly detection powered by Scikit-Learn Isolation Forest.</p>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card p-3 bg-white shadow-sm">
+            <h5>Total Anomalies Detected: <span class="text-danger">{{ run.total_anomalies }}</span></h5>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header"><h5>Detected Anomalies Table</h5></div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Type</th>
+                    <th>Column(s)</th>
+                    <th>Severity</th>
+                    <th>Explanation</th>
+                    <th>Recommended Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in anomalies %}
+                <tr>
+                    <td>{{ a.record_index }}</td>
+                    <td>{{ a.anomaly_type }}</td>
+                    <td>{{ a.column_name }}</td>
+                    <td><span class="badge bg-danger">{{ a.severity }}</span></td>
+                    <td>{{ a.explanation }}</td>
+                    <td>{{ a.recommended_action }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center text-muted">No anomalies detected in this dataset.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<a href="{% url 'dataset_detail' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back to Dataset</a>
+{% endblock %}

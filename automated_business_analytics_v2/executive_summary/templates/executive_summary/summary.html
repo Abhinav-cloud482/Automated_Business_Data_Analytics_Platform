@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Automated Executive Summary: {{ dataset.name }}</h2>
+<p class="text-muted">High-level business brief and data-backed recommendations.</p>
+<div class="row mb-4">
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Total Records</h5><h3>{{ summary.total_records }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Total Columns</h5><h3>{{ summary.total_columns }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Missing Cells</h5><h3>{{ summary.missing_cells }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Duplicates</h5><h3>{{ summary.duplicates }}</h3></div></div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white"><h5>Actionable Business Recommendations</h5></div>
+    <div class="card-body">
+        <ul>
+            {% for rec in recommendations %}
+            <li class="mb-2">{{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<a href="{% url 'dataset_detail' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back to Dataset</a>
+{% endblock %}

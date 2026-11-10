@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Dataset: {{ dataset.name }}</h2>
+    <div>
+        <a href="{% url 'cleaning_view' dataset.pk %}" class="btn btn-warning text-white"><i class="fas fa-broom me-1"></i> Clean</a>
+        <a href="{% url 'quality_view' dataset.pk %}" class="btn btn-primary"><i class="fas fa-check-circle me-1"></i> Quality</a>
+        <a href="{% url 'anomaly_view' dataset.pk %}" class="btn btn-danger"><i class="fas fa-exclamation-triangle me-1"></i> Anomalies</a>
+        <a href="{% url 'eda_view' dataset.pk %}" class="btn btn-success"><i class="fas fa-chart-bar me-1"></i> EDA</a>
+        <a href="{% url 'ai_analyst_view' dataset.pk %}" class="btn btn-dark"><i class="fas fa-robot me-1"></i> AI Analyst</a>
+        <a href="{% url 'executive_summary_view' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-file-alt me-1"></i> Summary</a>
+        <a href="{% url 'dataset_list' %}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i> Back</a>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Rows</h5><h3>{{ dataset.row_count }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Columns</h5><h3>{{ dataset.column_count }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Duplicates</h5><h3>{{ summary.duplicates }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 bg-white shadow-sm"><h5>Cleaned?</h5><h3>{% if dataset.is_cleaned %}<span class="text-success">Yes</span>{% else %}<span class="text-muted">No</span>{% endif %}</h3></div></div>
+</div>
+<div class="card mb-4">
+    <div class="card-header"><h5>Data Preview (First 10 Rows)</h5></div>
+    <div class="card-body table-responsive">
+        {{ preview|safe }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>AI Conversational Data Analyst</h2>
+<p class="text-muted">Ask questions in natural language about <strong>{{ dataset.name }}</strong> without writing code.</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm mb-4" style="height: 400px; overflow-y: scroll; padding: 20px;" id="chatContainer">
+            {% for msg in messages %}
+                {% if msg.sender == 'user' %}
+                    <div class="d-flex justify-content-end mb-3">
+                        <div class="bg-primary text-white p-3 rounded" style="max-width: 70%;">
+                            <strong>You:</strong><br>{{ msg.message_text }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="bg-light border p-3 rounded" style="max-width: 70%;">
+                            <strong>AI Analyst:</strong><br>{{ msg.message_text|safe }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p class="text-center text-muted my-auto">Start by asking a question below, e.g., <em>"What is the total sales?"</em> or <em>"What is the average salary?"</em></p>
+            {% endfor %}
+        </div>
+        <form method="post" class="card p-3 shadow-sm">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="question" class="form-control" placeholder="Ask a question about your dataset..." required autocomplete="off">
+                <button type="submit" class="btn btn-dark"><i class="fas fa-paper-plane me-1"></i> Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mt-4">
+    <a href="{% url 'dataset_detail' dataset.pk %}" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i> Back to Dataset</a>
+</div>
+{% endblock %}
